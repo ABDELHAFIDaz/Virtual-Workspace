@@ -1,0 +1,194 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 30px;
+    background-color: rgb(111, 131, 138);
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+}
+
+main{
+    background-image: url(img/plan-69159a65c5684763515973.jpg);
+    background-repeat: no-repeat;
+    margin-top: 3vh;
+    margin-right: 3vh;
+    width: 75%;
+    height: 90vh;
+    display: grid;
+}
+main>img{
+    width: 100%;
+}
+
+aside{
+    background-color: white;
+    width: 20%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+aside>h1{
+    align-self: flex-start;
+    color: rgb(37, 91, 167);
+    font-size: 30px;
+}
+
+.users-cards{
+    height: 80%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.card{
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(183, 180, 180);
+    width: 90%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 6px;
+}
+
+.card:hover{
+    border-color: gray;
+    box-shadow: 0px 0px 6px skyblue;
+}
+
+#add-worker-btn{
+    border-radius: 10px;
+    padding: 5px;
+    width: 80%;
+    height: 7%;
+    background-color: rgb(37, 91, 167);
+    color: white;
+    font-size: 15px;
+}
+
+#add-worker-btn:hover{
+    border: 10px rgb(37, 91, 167) solid;
+}
+
+.is-hidden{
+    display: none;
+}
+
+form{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    width: 45%;
+    height: 700px;
+    gap: 20px;
+    padding: 10px;
+    padding-bottom: 30px;
+    border-radius: 10px;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+form>div{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+form>div>h2{
+    color: rgb(37, 91, 167);
+}
+
+input, select{
+    padding: 10px;
+    width: 80%;
+    border-radius: 7px;
+}
+
+.error{
+    color: red;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(246, 105, 105, 0.38);
+}
+
+.image-div>img{
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    border: 1px black solid;
+}
+
+#sub-btn{
+    border-radius: 10px;
+    width: 50%;
+    padding: 10px;
+    background-color: blue;
+    color: white;
+}
+
+#add-experience{
+    border-radius: 10px;
+    width: 30%;
+    padding: 10px;
+    background-color: rgb(207, 208, 144);
+    color: black;
+    font-size: 12px;
+}
+
+#add-experience:hover{
+    border: 2px rgb(242, 245, 62) solid;
+    background-color: rgb(242, 245, 62);
+}
+
+#form-closer{
+    background-color: rgb(185, 185, 185);
+    border: none;
+    font-size: larger;
+}
+
+#form-closer:hover{
+    color: rgb(37, 91, 167);
+}
+
+.experiences{
+    width: 90%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(164, 156, 156);
+    align-items: center;
+    border-radius: 10px;
+    gap: 10px;
+}
+
+label{
+    align-self: flex-start;
+}
+
+.rooms{
+    width: 50px;
+    height: 50px;
+    background-color: yellow;
+}
