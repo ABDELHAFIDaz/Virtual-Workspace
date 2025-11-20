@@ -11,68 +11,90 @@
 
 <body>
     <main>
-        <div class="rooms"></div>
-        <div class="rooms"></div>
-        <div class="rooms"></div>
-        <div class="rooms"></div>
-        <div class="rooms"></div>
-        <div class="rooms"></div>
+        <!-- <img src="img/plan-69159a65c5684763515973.jpg" alt=""> -->
+        <section class="company-rooms">
+            <div class="rooms" id="conference-room">
+                <button class="add-to-room-btn">+</button>
+            </div>
+            <div class="rooms" id="servers">
+                <button class="add-to-room-btn">+</button>
+            </div>
+            <div class="rooms" id="jus-gap"></div>
+            <div class="rooms" id="ali-gap"></div>
+            <div class="rooms" id="securite">
+                <button class="add-to-room-btn">+</button>
+            </div>
+            <div class="rooms" id="reception">
+                <button class="add-to-room-btn">+</button>
+            </div>
+            <div class="rooms" id="staff-room">
+                <button class="add-to-room-btn">+</button>
+            </div>
+            <div class="rooms" id="archives">
+                <button class="add-to-room-btn">+</button>
+            </div>
+        </section>
     </main>
     <aside>
+        <button class="side-bar-toggle" style="font-size: 20px;">side bar</button>
         <h1>Unassigned Staff</h1>
-        <form action="" id="form" class="is-hidden">
-            <div>
-                <h2>Add a new worker</h2>
-                <button id="form-closer">X</button>
-            </div>
-
-            <p class="error is-hidden">Something is wrong!</p>
-
-            <label for="form-name">Worker name:</label>
-            <input type="text" placeholder="name" id="form-name">
-
-            <label for="form-role">Worker role:</label>
-            <select name="role" id="form-role">
-                <option value="IT">IT</option>
-                <option value="Receptionist">Receptionist</option>
-                <option value="Securite">Securite</option>
-                <option value="Cleaning">Cleaning</option>
-                <option value="Other">Other</option>
-            </select>
-
-            <label for="form-name">Worker image:</label>
-            <input type="text" placeholder="image url" id="form-image" >
-            <div class="image-div"></div>
-
-            <label for="">Experiences:</label>
-            <div class="experiences">
-                <!-- filling from js -->
-                 <label for="">Company:</label>
-                 <input type="text">
-                 <label for="">Role:</label>
-                 <input type="text">
-                 <label for="">From:</label>
-                 <input type="date">
-                 <label for="">To:</label>
-                 <input type="date">
-            </div>
-            <button id="add-experience">Add an experience</button>
-
-            <label for="form-email">Worker email:</label>
-            <input type="text" placeholder="example@gmail.com" id="form-email">
-
-            <label for="form-phone-number">Worker phone number:</label>
-            <input type="number" placeholder="+212 66666666" id="form-phone-number">
-
-            <button type="submit" id="sub-btn">Add worker</button>
-        </form>
 
         <div class="users-cards">
             <!-- adding from js (user card) -->
         </div>
-        
+
         <button id="add-worker-btn">Add New Worker</button>
     </aside>
+    <!-- form modal ==================================================================================== -->
+    <form action="" id="form" class="is-hidden">
+        <div>
+            <h2>Add a new worker</h2>
+            <button id="form-closer">X</button>
+        </div>
+
+        <p class="error is-hidden">Something is wrong!</p>
+
+        <label for="form-name">name:</label>
+        <input type="text" placeholder="name" id="form-name">
+
+        <label for="form-role">role:</label>
+        <select name="role" id="form-role">
+            <option value="it">IT</option>
+            <option value="receptionist">Receptionist</option>
+            <option value="securite">Securite</option>
+            <option value="manager">Manager</option>
+            <option value="cleaning">Cleaning</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label for="form-name">image:</label>
+        <input type="text" placeholder="image url" id="form-image">
+        <div class="image-div"></div>
+
+        <label for="">Experiences:</label>
+        <div class="experiences">
+            <!-- filling from js -->
+            <!-- <div>
+                <label for="">Company:</label>
+                <input type="text">
+                <label for="">Role:</label>
+                <input type="text">
+                <label for="">From:</label>
+                <input type="date">
+                <label for="">To:</label>
+                <input type="date">
+            </div> -->
+        </div>
+        <button id="add-experience" type="none">Add an experience</button>
+
+        <label for="form-email">email:</label>
+        <input type="text" placeholder="example@gmail.com" id="form-email">
+
+        <label for="form-phone-number">phone number:</label>
+        <input type="number" placeholder="+212 66666666" id="form-phone-number">
+
+        <button type="submit" id="sub-btn">Add worker</button>
+    </form>
 </body>
 
 </html>
