@@ -1,25 +1,40 @@
 let unassigned = [];
-let conferenceRoom= [];
+let conferenceRoom = [];
 let securite = [];
 let reception = [];
 let archives = [];
 let servers = [];
 let staffRomm = [];
 
-let experiences = 0;
+let experiencesCounter = 0;
 let ID = 1;
 
 document.getElementById('add-worker-btn').addEventListener('click', () => {
-    document.getElementById("form").classList.remove("is-hidden");
+    document.getElementById("form").classList.toggle("is-hidden");
     document.querySelector(".error").classList.add("is-hidden");
     document.querySelectorAll('input').forEach(ele => ele.style.borderColor = "black");
+    // add experience button
+    document.getElementById("add-experience").addEventListener('click', (e) => {
+        experiencesCounter++;
+        document.querySelector(".experiences").insertAdjacentHTML("beforeend", `<div class="experience">
+                <label for="">Company:</label>
+                <input type="text">
+                <label for="">Role:</label>
+                <input type="text">
+                <label for="">From:</label>
+                <input type="date">
+                <label for="">To:</label>
+                <input type="date">
+            </div>`)
+    })
+    // form submit
     document.getElementById('form').addEventListener('submit', (e) => {
         e.preventDefault();
         let isValid = true;
         let nameRegex = /^[a-zA-Z]+$/;
         let imageRegex = /\.(jpe?g|png|gif|bmp|svg|webp)$/;
         let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        let phoneNumRegex = /[\d]/;
+        let phoneNumRegex = /^\+?\d{10,13}$/;
         let name = document.getElementById("form-name");
         let role = document.getElementById("form-role");
         let imageUrl = document.getElementById("form-image");
@@ -58,12 +73,40 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
         else
             phoneNum.style.borderColor = "black";
 
+        // experiences validation
+        document.querySelectorAll(".experience").forEach(exper => {
+            // to check the company input
+            if (!nameRegex.test(exper.children[1].value.trim())) {
+                isValid = false;
+                exper.children[1].style.borderColor = "red";
+            }
+            else
+                exper.children[1].style.borderColor = "black";
+
+            // to check role input
+            if (!nameRegex.test(exper.children[3].value.trim())) {
+                isValid = false;
+                exper.children[3].style.borderColor = "red";
+            }
+            else
+                exper.children[3].style.borderColor = "black";
+
+            // to check if the dates are valid
+            if(exper.children[5].value >= exper.children[7].value){
+                isValid = false;
+                exper.children[5].style.borderColor = "red";
+                exper.children[7].style.borderColor = "red";
+            } 
+        })
+
         // final check
         if (isValid) {
             addWorker(name.value, role.value, imageUrl.value, email.value, phoneNum.value);
             displayWorker();
             document.getElementById("form").classList.add("is-hidden");
             document.getElementById("form").reset();
+            experiencesCounter = 0;
+            document.querySelector(".experiences").innerHTML = "";
         }
         else {
             document.querySelector(".error").classList.remove("is-hidden");
@@ -72,14 +115,25 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
     })
 })
 
+
 function addWorker(name, role, imageUrl, email, phoneNum) {
     unassigned.push({
+        id: ID++,
         Name: name,
         Role: role,
         ImageUrl: imageUrl,
         email: email,
         phoneNum: phoneNum,
         experiances: []
+    })
+    // pushing experiences values
+    document.querySelectorAll(".experience").forEach(exper => {
+        unassigned[unassigned.length - 1].experiances.push({
+            company: exper.children[1].value,
+            role: exper.children[3].value,
+            from: exper.children[5].value,
+            to: exper.children[7].value,
+        })
     })
 }
 
