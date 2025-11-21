@@ -9,6 +9,11 @@ let staffRomm = [];
 let experiencesCounter = 0;
 let ID = 1;
 
+for (let i = 0; i < 5; i++) {
+    addWorker(`name${i + 1}`, (i > 2) ? "it" : "manager", "https://picsum.photos/id/870/200/300?grayscale&blur=2.jpg", "test@gmail.com", "0123456789");
+    displayWorker();
+}
+
 document.getElementById('add-worker-btn').addEventListener('click', () => {
     document.getElementById("form").classList.toggle("is-hidden");
     document.querySelector(".error").classList.add("is-hidden");
@@ -92,11 +97,11 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
                 exper.children[3].style.borderColor = "black";
 
             // to check if the dates are valid
-            if(exper.children[5].value >= exper.children[7].value){
+            if (exper.children[5].value >= exper.children[7].value) {
                 isValid = false;
                 exper.children[5].style.borderColor = "red";
                 exper.children[7].style.borderColor = "red";
-            } 
+            }
         })
 
         // final check
@@ -119,9 +124,9 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
 function addWorker(name, role, imageUrl, email, phoneNum) {
     unassigned.push({
         id: ID++,
-        Name: name,
-        Role: role,
-        ImageUrl: imageUrl,
+        name: name,
+        role: role,
+        imageUrl: imageUrl,
         email: email,
         phoneNum: phoneNum,
         experiances: []
@@ -139,11 +144,11 @@ function addWorker(name, role, imageUrl, email, phoneNum) {
 
 function displayWorker() {
     document.querySelector(".users-cards").innerHTML += `
-    <div class="card">
-            <div class="image-div"><img src="${unassigned[unassigned.length - 1].ImageUrl}" alt="worker image"></div>
+    <div class="card" onclick="showDetails(${unassigned[unassigned.length - 1].id})">
+            <div class="image-div"><img src="${unassigned[unassigned.length - 1].imageUrl}" alt="worker image"></div>
             <div>
-                <h4>${unassigned[unassigned.length - 1].Name}</h4>
-                <p style="font-size: 10px">${unassigned[unassigned.length - 1].Role}</p>
+                <h4>${unassigned[unassigned.length - 1].name}</h4>
+                <p style="font-size: 10px">${unassigned[unassigned.length - 1].role}</p>
             </div>
          </div>`
 }
@@ -152,3 +157,18 @@ document.getElementById('form-closer').addEventListener('click', () => {
     document.getElementById("form").classList.add("is-hidden");
     document.getElementById("form").reset();
 })
+
+function showDetails(id) {
+    let target = unassigned.find(user => user.id == id);
+    document.getElementById("detail--modal").style.display = "flex";
+    document.getElementById("detail--modal").innerHTML = `<img src="${target.imageUrl}" alt="worker-image">
+            <h2>${target.name}</h2>
+            <p>Role: ${target.role}</p>
+            <p>Email: ${target.email}</p>
+            <p>Phone number: ${target.phoneNum}</p>
+            <p>${(target.experiances.length > 0) ? "Experiences: " + target.experiances.length : "No experiences"}</p>
+            <button class="close-modal-btn" onclick="closeModal()">Close</button>`
+
+
+}
+function closeModal() { document.getElementById("detail--modal").style.display = "none"}
