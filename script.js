@@ -9,15 +9,18 @@ let staffRomm = [];
 let experiencesCounter = 0;
 let ID = 1;
 
+// demos
 for (let i = 0; i < 5; i++) {
     addWorker(`name${i + 1}`, (i > 2) ? "it" : "manager", "https://picsum.photos/id/870/200/300?grayscale&blur=2.jpg", "test@gmail.com", "0123456789");
     displayWorker();
 }
 
+// add a new worker button
 document.getElementById('add-worker-btn').addEventListener('click', () => {
     document.getElementById("form").classList.toggle("is-hidden");
     document.querySelector(".error").classList.add("is-hidden");
     document.querySelectorAll('input').forEach(ele => ele.style.borderColor = "black");
+
     // add experience button
     document.getElementById("add-experience").addEventListener('click', (e) => {
         experiencesCounter++;
@@ -32,7 +35,8 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
                 <input type="date">
             </div>`)
     })
-    // form submit
+
+    // form submit hundler
     document.getElementById('form').addEventListener('submit', (e) => {
         e.preventDefault();
         let isValid = true;
@@ -120,7 +124,7 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
     })
 })
 
-
+// pushing each new worker in to the unnassigned array
 function addWorker(name, role, imageUrl, email, phoneNum) {
     unassigned.push({
         id: ID++,
@@ -142,15 +146,16 @@ function addWorker(name, role, imageUrl, email, phoneNum) {
     })
 }
 
+// for displaying worker card for each new unassigned worker
 function displayWorker() {
-    document.querySelector(".users-cards").innerHTML += `
+    document.querySelector(".users-cards").insertAdjacentHTML("beforeend", `
     <div class="card" onclick="showDetails(${unassigned[unassigned.length - 1].id})">
             <div class="image-div"><img src="${unassigned[unassigned.length - 1].imageUrl}" alt="worker image"></div>
             <div>
                 <h4>${unassigned[unassigned.length - 1].name}</h4>
                 <p style="font-size: 10px">${unassigned[unassigned.length - 1].role}</p>
             </div>
-         </div>`
+         </div>`);
 }
 
 document.getElementById('form-closer').addEventListener('click', () => {
@@ -158,6 +163,7 @@ document.getElementById('form-closer').addEventListener('click', () => {
     document.getElementById("form").reset();
 })
 
+// for the details modal
 function showDetails(id) {
     let target = unassigned.find(user => user.id == id);
     document.getElementById("detail--modal").style.display = "flex";
