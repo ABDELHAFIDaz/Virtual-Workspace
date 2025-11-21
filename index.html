@@ -14,24 +14,30 @@
         <!-- <img src="img/plan-69159a65c5684763515973.jpg" alt=""> -->
         <section class="company-rooms">
             <div class="rooms" id="conference-room">
-                <button class="add-to-room-btn">+</button>
+                <span style="display: none;">conference-room</span>
+                <button class="add-to-room-btn" id="to-conference">+</button>
             </div>
             <div class="rooms" id="servers">
-                <button class="add-to-room-btn">+</button>
+                <div style="display: none;">servers</div>
+                <button class="add-to-room-btn" id="to-servers">+</button>
             </div>
             <div class="rooms" id="jus-gap"></div>
             <div class="rooms" id="ali-gap"></div>
             <div class="rooms" id="securite">
-                <button class="add-to-room-btn">+</button>
+                <span style="display: none;">securite</span>
+                <button class="add-to-room-btn" id="to-securite">+</button>
             </div>
             <div class="rooms" id="reception">
-                <button class="add-to-room-btn">+</button>
+                <span style="display: none;">reception</span>
+                <button class="add-to-room-btn" id="to-reception">+</button>
             </div>
             <div class="rooms" id="staff-room">
-                <button class="add-to-room-btn">+</button>
+                <span style="display: none;">staff-room</span>
+                <button class="add-to-room-btn" id="to-staff-room">+</button>
             </div>
             <div class="rooms" id="archives">
-                <button class="add-to-room-btn">+</button>
+                <span style="display: none;">archives</span>
+                <button class="add-to-room-btn" id="to-archives">+</button>
             </div>
         </section>
     </main>
@@ -101,6 +107,10 @@
         <p>Role: ${}</p>
         <p>Email: ${}</p>
         <p>Phone number: ${}</p> -->
+     </div>
+     <div class="details-modal is-hidden" id="adding--modal" style="z-index: 999;">
+        <div class="users-cards"></div>
+        <button class="close-modal-btn" id="close-adding-modal">Close</button>
      </div>
 </body>
 

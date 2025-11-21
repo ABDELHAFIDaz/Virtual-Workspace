@@ -203,6 +203,25 @@ form{
 .details-modal{
     position: absolute;
     top: 50%;
+    left: 28%;
+    transform: translate(-50%, -80%);
+    display: none;  /* to be hidden by default*/
+    flex-direction: column;
+    align-items: center;
+    background-color: lightgrey;
+    box-shadow: 10px 10px 26px skyblue;
+    width: 20%;
+    height: auto;
+    gap: 20px;
+    padding: 10px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+#adding--modal{
+    position: absolute;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -80%);
     display: none;  /* to be hidden by default*/
@@ -216,6 +235,7 @@ form{
     padding: 10px;
     padding-bottom: 20px;
     border-radius: 10px;
+    z-index: 1000;
 }
 
 .details-modal>img{
@@ -325,6 +345,17 @@ label{
     background-color: rgb(37, 91, 167);
     border-radius: 4px;
     color: white;
+}
+
+.add-to-zone{
+    justify-self: right;
+}
+
+.add-to-zone>button{
+    border-radius: 7px;
+    background-color: skyblue;
+    color: white;
+    padding: 2px 5px;
 }
 
 @media(max-width: 1024px){

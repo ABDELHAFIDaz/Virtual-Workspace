@@ -177,4 +177,78 @@ function showDetails(id) {
 
 
 }
-function closeModal() { document.getElementById("detail--modal").style.display = "none"}
+function closeModal() { document.getElementById("detail--modal").style.display = "none" }
+
+// to check if the important zone are empty
+function zoneEmpty() {
+    if (securite.length == 0)
+        document.getElementById("securite").style.backgroundColor = "rgba(255, 0, 0, 0.404)";
+    else
+        document.getElementById("securite").style.backgroundColor = "rgba(0, 255, 255, 0.204)";
+    if (reception.length == 0)
+        document.getElementById("reception").style.backgroundColor = "rgba(255, 0, 0, 0.404)";
+    else
+        document.getElementById("securite").style.backgroundColor = "rgba(0, 255, 255, 0.204)";
+    if (servers.length == 0)
+        document.getElementById("servers").style.backgroundColor = "rgba(255, 0, 0, 0.404)";
+    else
+        document.getElementById("securite").style.backgroundColor = "rgba(0, 255, 255, 0.204)";
+}
+zoneEmpty();
+
+// displaying of the modal with the worker that can be assigned targeted zone
+document.querySelectorAll(".add-to-room-btn").forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.getElementById("adding--modal").firstElementChild.innerHTML = "";
+        let zone = btn.previousElementSibling.innerHTML;
+        console.log("zone: ", zone)
+        document.getElementById("adding--modal").style.display = "flex"
+        switch (zone) {
+            case "conference-room":
+                unassigned.forEach(worker => assigningModal(worker));
+                break;
+            case "servers":
+                unassigned.forEach(worker => {
+                    if(worker.role == "it" || worker.role == "manager" || worker.role == "cleaning")
+                        assigningModal(worker);
+                });
+                break;
+            case "securite":
+                unassigned.forEach(worker => {
+                    if(worker.role == "securite" || worker.role == "manager" || worker.role == "cleaning")
+                        assigningModal(worker);
+                });
+                break;
+            case "reception":
+                unassigned.forEach(worker => {
+                    if(worker.role == "receptionist" || worker.role == "manager" || worker.role == "cleaning")
+                        assigningModal(worker);
+                });
+                break;
+            case "staff-room":
+                unassigned.forEach(worker => assigningModal(worker));
+                break;
+            case "archives":
+                unassigned.forEach(worker => {
+                    if(worker.role == "it" || worker.role == "manager")
+                        assigningModal(worker);
+                });
+                break;
+        }
+    })
+    document.getElementById('close-adding-modal').addEventListener("click", () => {
+        document.getElementById("adding--modal").style.display = "none";
+    })
+})
+
+function assigningModal(worker) {
+    document.querySelector("#adding--modal").firstElementChild.insertAdjacentHTML("beforeend", `
+    <div class="card">
+            <div class="image-div"><img src="${worker.imageUrl}" alt="worker image"></div>
+            <div>
+                <h4>${worker.name}</h4>
+                <p style="font-size: 10px">${worker.role}</p>
+            </div>
+            <div class="add-to-zone"><button>Add</button></div>
+         </div>`);
+}
