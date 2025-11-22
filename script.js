@@ -12,7 +12,7 @@ let ID = 1;
 // demos
 for (let i = 0; i < 5; i++) {
     addWorker(`name${i + 1}`, (i > 2) ? "it" : "manager", "https://picsum.photos/id/870/200/300?grayscale&blur=2.jpg", "test@gmail.com", "0123456789");
-    displayWorker();
+    displayWorker(unassigned[unassigned.length - 1]);
 }
 
 // add a new worker button
@@ -111,7 +111,7 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
         // final check
         if (isValid) {
             addWorker(name.value, role.value, imageUrl.value, email.value, phoneNum.value);
-            displayWorker();
+            displayWorker(unassigned[unassigned.length - 1]);
             document.getElementById("form").classList.add("is-hidden");
             document.getElementById("form").reset();
             experiencesCounter = 0;
@@ -147,13 +147,13 @@ function addWorker(name, role, imageUrl, email, phoneNum) {
 }
 
 // for displaying worker card for each new unassigned worker
-function displayWorker() {
+function displayWorker(worker) {
     document.querySelector(".users-cards").insertAdjacentHTML("beforeend", `
-    <div class="card" onclick="showDetails(${unassigned[unassigned.length - 1].id})">
-            <div class="image-div"><img src="${unassigned[unassigned.length - 1].imageUrl}" alt="worker image"></div>
+    <div class="card" onclick="showDetails(${worker.id})">
+            <div class="image-div"><img src="${worker.imageUrl}" alt="worker image"></div>
             <div>
-                <h4>${unassigned[unassigned.length - 1].name}</h4>
-                <p style="font-size: 10px">${unassigned[unassigned.length - 1].role}</p>
+                <h4>${worker.name}</h4>
+                <p style="font-size: 10px">${worker.role}</p>
             </div>
          </div>`);
 }
@@ -200,41 +200,44 @@ zoneEmpty();
 document.querySelectorAll(".add-to-room-btn").forEach(btn => {
     btn.addEventListener('click', () => {
         document.getElementById("adding--modal").firstElementChild.innerHTML = "";
-        let zone = btn.previousElementSibling.innerHTML;
-        console.log("zone: ", zone)
-        document.getElementById("adding--modal").style.display = "flex"
-        switch (zone) {
-            case "conference-room":
-                unassigned.forEach(worker => assigningModal(worker));
-                break;
-            case "servers":
-                unassigned.forEach(worker => {
-                    if(worker.role == "it" || worker.role == "manager" || worker.role == "cleaning")
-                        assigningModal(worker);
-                });
-                break;
-            case "securite":
-                unassigned.forEach(worker => {
-                    if(worker.role == "securite" || worker.role == "manager" || worker.role == "cleaning")
-                        assigningModal(worker);
-                });
-                break;
-            case "reception":
-                unassigned.forEach(worker => {
-                    if(worker.role == "receptionist" || worker.role == "manager" || worker.role == "cleaning")
-                        assigningModal(worker);
-                });
-                break;
-            case "staff-room":
-                unassigned.forEach(worker => assigningModal(worker));
-                break;
-            case "archives":
-                unassigned.forEach(worker => {
-                    if(worker.role == "it" || worker.role == "manager")
-                        assigningModal(worker);
-                });
-                break;
+        if (unassigned.length != 0) {
+            let zone = btn.previousElementSibling.innerHTML;
+            console.log("zone: ", zone)
+            document.getElementById("adding--modal").style.display = "flex"
+            switch (zone) {
+                case "conference-room":
+                    unassigned.forEach(worker => assigningModal(worker));
+                    break;
+                case "servers":
+                    unassigned.forEach(worker => {
+                        if (worker.role == "it" || worker.role == "manager" || worker.role == "cleaning")
+                            assigningModal(worker);
+                    });
+                    break;
+                case "securite":
+                    unassigned.forEach(worker => {
+                        if (worker.role == "securite" || worker.role == "manager" || worker.role == "cleaning")
+                            assigningModal(worker);
+                    });
+                    break;
+                case "reception":
+                    unassigned.forEach(worker => {
+                        if (worker.role == "receptionist" || worker.role == "manager" || worker.role == "cleaning")
+                            assigningModal(worker);
+                    });
+                    break;
+                case "staff-room":
+                    unassigned.forEach(worker => assigningModal(worker));
+                    break;
+                case "archives":
+                    unassigned.forEach(worker => {
+                        if (worker.role == "it" || worker.role == "manager")
+                            assigningModal(worker);
+                    });
+                    break;
+            }
         }
+
     })
     document.getElementById('close-adding-modal').addEventListener("click", () => {
         document.getElementById("adding--modal").style.display = "none";
@@ -249,6 +252,17 @@ function assigningModal(worker) {
                 <h4>${worker.name}</h4>
                 <p style="font-size: 10px">${worker.role}</p>
             </div>
-            <div class="add-to-zone"><button>Add</button></div>
+            <button class="add-to-zone" onclick="assignToZone(this, ${worker.id})">Add</button>
          </div>`);
+}
+
+function assignToZone(ele, id) {
+    indexToRemove = unassigned.indexOf(unassigned.find(worker => worker.id == id));
+    unassigned.splice(indexToRemove, 1);
+    document.querySelector(".users-cards").children[indexToRemove].outerHTML = "";
+    // document.querySelector(".users-cards").innerHTML = "";
+    // unassigned.forEach(worker => displayWorker(worker));
+    ele.parentElement.outerHTML = "";
+    if (document.getElementById("adding--modal").firstElementChild.children.length == 0)
+        document.getElementById("adding--modal").style.display = "none";
 }
