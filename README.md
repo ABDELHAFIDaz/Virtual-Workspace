@@ -34,6 +34,8 @@ Petit projet front-end qui simule l'affectation du personnel dans les différent
 
 ![Validation HTML](img/tests/W3C-validation.png)
 
+![Validation CSS](img/tests/w3cForCss.png)
+
 ![Lighthouse - Desktop](img/tests/lighHouseTestForDesktop.png)
 
 ![Lighthouse - Mobile](img/tests/lightHouseTestForMobile.png)
