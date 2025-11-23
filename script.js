@@ -6,7 +6,7 @@ let ID = 1;
 
 let targetedZone;
 // demos
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 7; i++) {
     addWorker(`name${i + 1}`, (i > 2) ? "it" : "manager", "img/xIcon.webp", "test@gmail.com", "0123456789");
     displayWorker(unassigned[unassigned.length - 1]);
 }
@@ -22,6 +22,12 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
     document.querySelector(".error").classList.add("is-hidden");
     document.querySelectorAll('input').forEach(ele => ele.style.borderColor = "black");
     document.querySelector(".experiences").insertAdjacentHTML('afterend', `<button id="add-experience" type="button">Add an experience</button>`);
+    document.querySelector(".pre-image").innerHTML = "";
+
+    // pre image vis
+    document.getElementById("form-image").addEventListener('blur', () => {
+        document.querySelector(".pre-image").innerHTML = `<img src="${document.getElementById("form-image").value}" alt="worker profile picture">`;
+    })
 
     // add experience button
     document.getElementById("add-experience").addEventListener('click', (e) => {
@@ -225,7 +231,7 @@ document.querySelectorAll(".add-to-room-btn").forEach(btn => {
         if (unassigned.length != 0) {
             let zone = btn.previousElementSibling.innerHTML;
             // console.log("zone: ", zone)
-            document.getElementById("adding--modal").style.display = "flex"
+            document.getElementById("adding--modal").style.display = "flex";
             switch (zone) {
                 case "conference-room":
                     unassigned.forEach(worker => assigningModal(worker));
@@ -288,7 +294,7 @@ function assignToZone(ele, id) {
         ele.parentElement.outerHTML = "";
         if (document.getElementById("adding--modal").firstElementChild.children.length == 0)
             document.getElementById("adding--modal").style.display = "none";
-        targetedZone.insertAdjacentHTML('beforeend', `<div><img src="${assigned[assigned.length - 1].imageUrl}" alt="worker image" onclick="showDetails(${assigned[assigned.length - 1].id})"><h3>${assigned[assigned.length - 1].name}</h3><button class="remove-from-zone" onclick="unassignFromZone(this)"></button><span style="display: none">${assigned[assigned.length - 1].id}</span></div>`);
+        targetedZone.insertAdjacentHTML('beforeend', `<div><img src="${assigned[assigned.length - 1].imageUrl}" alt="worker image" onclick="showDetails(${assigned[assigned.length - 1].id})"><h3>${assigned[assigned.length - 1].name}</h3><button class="remove-from-zone" onclick="unassignFromZone(this)">x</button><span style="display: none">${assigned[assigned.length - 1].id}</span></div>`);
         zoneEmpty();
     }
 }
@@ -298,6 +304,7 @@ function unassignFromZone(ele) {
     ele.parentElement.outerHTML = "";
     console.log("after unassing: ", unassigned);
     displayWorker(unassigned[unassigned.length - 1]);
-    assigningModal(unassigned[unassigned.length - 1]);
+    // assigningModal(unassigned[unassigned.length - 1]);
+    document.getElementById("adding--modal").style.display = "none";
     zoneEmpty();
 }

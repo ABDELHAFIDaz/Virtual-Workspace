@@ -81,7 +81,7 @@
 
         <label for="form-name">image:</label>
         <input type="text" placeholder="image url" id="form-image">
-        <div class="image-div"></div>
+        <div class="pre-image"></div>
 
         <h3>Experiences:</h3>
         <div class="experiences">
@@ -107,7 +107,7 @@
         <button type="submit" id="sub-btn">Add worker</button>
     </form>
     <!-- ============= details modal ============== -->
-     <div class="details-modal is-hidden" id="detail--modal">
+     <div class="details-modal" id="detail--modal">
         <!-- <h2>${}</h2>
         <p>Role: ${}</p>
         <p>Email: ${}</p>
@@ -115,7 +115,7 @@
      </div>
      <!-- =============== assign modal =============-->
      <div class="details-modal is-hidden" id="adding--modal" style="z-index: 999;">
-        <div class="users-cards"></div>
+        <div class="users-cards" id="adding--modal--container"></div>
         <button class="close-modal-btn" id="close-adding-modal">Close</button>
      </div>
 </body>
