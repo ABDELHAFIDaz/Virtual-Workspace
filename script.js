@@ -1,10 +1,9 @@
 let unassigned = [];
 let assigned = [];
 
-let experiencesCounter = 0;
 let ID = 1;
-
 let targetedZone;
+
 // demos
 for (let i = 0; i < 7; i++) {
     addWorker(`name${i + 1}`, (i > 2) ? "it" : "manager", "img/xIcon.webp", "test@gmail.com", "0123456789");
@@ -21,18 +20,17 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
     document.getElementById("form").classList.toggle("is-hidden");
     document.querySelector(".error").classList.add("is-hidden");
     document.querySelectorAll('input').forEach(ele => ele.style.borderColor = "black");
-    document.querySelector(".experiences").insertAdjacentHTML('afterend', `<button id="add-experience" type="button">Add an experience</button>`);
+    document.querySelector(".experiences").innerHTML = `<button id="add-experience" type="button">Add an experience</button>`;
     document.querySelector(".pre-image").innerHTML = "";
 
-    // pre image vis
+    // pre image preview
     document.getElementById("form-image").addEventListener('blur', () => {
         document.querySelector(".pre-image").innerHTML = `<img src="${document.getElementById("form-image").value}" alt="worker profile picture">`;
     })
 
     // add experience button
     document.getElementById("add-experience").addEventListener('click', (e) => {
-        experiencesCounter++;
-        document.querySelector(".experiences").insertAdjacentHTML("beforeend", `<div class="experience">
+        document.querySelector("#add-experience").insertAdjacentHTML('beforebegin', `<div class="experience">
                 <label for="">Company:</label>
                 <input type="text">
                 <label for="">Role:</label>
@@ -115,7 +113,7 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
                 exper.children[5].style.borderColor = "red";
                 exper.children[7].style.borderColor = "red";
             }
-            else{
+            else {
                 exper.children[5].style.borderColor = "black";
                 exper.children[7].style.borderColor = "black";
             }
@@ -127,21 +125,18 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
             displayWorker(unassigned[unassigned.length - 1]);
             document.getElementById("form").classList.add("is-hidden");
             document.getElementById("form").reset();
-            experiencesCounter = 0;
             document.querySelector(".experiences").innerHTML = "";
-            document.getElementById("add-experience").outerHTML = "";
+            // document.getElementById("add-experience").outerHTML = "";
         }
         else {
             document.querySelector(".error").classList.remove("is-hidden");
         }
-        console.log("unassigned array: ", unassigned);
     })
 })
 
 // for removing experiences
 function removeExperience(element) {
     element.parentElement.outerHTML = "";
-    experiencesCounter--;
 }
 
 // pushing each new worker in to the unnassigned array
@@ -182,15 +177,13 @@ function displayWorker(worker) {
 document.getElementById('form-closer').addEventListener('click', () => {
     document.getElementById("form").classList.add("is-hidden");
     document.getElementById("form").reset();
-    document.querySelector(".experiences").innerHTML = "";
-    document.getElementById("add-experience").outerHTML = "";
-    experiencesCounter = 0;
+    document.querySelector(".experiences").innerHTML = ""; //  to remove the experiences
+    // document.getElementById("add-experience").outerHTML = ""; // to remove the experience button
 })
 
 // for the details modal
 function showDetails(id) {
     let target = unassigned.find(worker => worker.id == id) ? unassigned.find(user => user.id == id) : assigned.find(wrkr => wrkr.id == id);
-    // console.log("targettttttt: ", target);
     document.getElementById("detail--modal").style.display = "flex";
     document.getElementById("detail--modal").innerHTML = `<img src="${target.imageUrl}" alt="worker-image">
             <h2>${target.name}</h2>
@@ -226,54 +219,60 @@ zoneEmpty();
 // displaying of the modal with the worker that can be assigned targeted zone
 document.querySelectorAll(".add-to-room-btn").forEach(btn => {
     btn.addEventListener('click', () => {
-        document.getElementById("adding--modal").firstElementChild.innerHTML = "";
         targetedZone = btn.parentElement.firstElementChild;
-        if (unassigned.length != 0) {
-            let zone = btn.previousElementSibling.innerHTML;
-            // console.log("zone: ", zone)
-            document.getElementById("adding--modal").style.display = "flex";
-            switch (zone) {
-                case "conference-room":
-                    unassigned.forEach(worker => assigningModal(worker));
-                    break;
-                case "servers":
-                    unassigned.forEach(worker => {
-                        if (worker.role == "it" || worker.role == "manager" || worker.role == "cleaning")
-                            assigningModal(worker);
-                    });
-                    break;
-                case "securite":
-                    unassigned.forEach(worker => {
-                        if (worker.role == "securite" || worker.role == "manager" || worker.role == "cleaning")
-                            assigningModal(worker);
-                    });
-                    break;
-                case "reception":
-                    unassigned.forEach(worker => {
-                        if (worker.role == "receptionist" || worker.role == "manager" || worker.role == "cleaning")
-                            assigningModal(worker);
-                    });
-                    break;
-                case "staff-room":
-                    unassigned.forEach(worker => assigningModal(worker));
-                    break;
-                case "archives":
-                    unassigned.forEach(worker => {
-                        if (worker.role == "it" || worker.role == "manager")
-                            assigningModal(worker);
-                    });
-                    break;
-            }
-            if(document.querySelector("#adding--modal").firstElementChild.children.length == 0)
-                document.getElementById("adding--modal").style.display = "none"
-        }
-
-    })
-    document.getElementById('close-adding-modal').addEventListener("click", () => {
-        document.getElementById("adding--modal").style.display = "none";
+        permissionToZone();
     })
 })
 
+// for closing the adding modal
+document.getElementById('close-adding-modal').addEventListener("click", () => {
+    document.getElementById("adding--modal").style.display = "none";
+})
+
+// permissions
+function permissionToZone() {
+    document.getElementById("adding--modal").firstElementChild.innerHTML = "";
+    if (unassigned.length != 0) {
+        let zone = targetedZone.nextElementSibling.innerHTML;
+        document.getElementById("adding--modal").style.display = "flex";
+        switch (zone) {
+            case "conference-room":
+                unassigned.forEach(worker => assigningModal(worker));
+                break;
+            case "servers":
+                unassigned.forEach(worker => {
+                    if (worker.role == "it" || worker.role == "manager" || worker.role == "cleaning")
+                        assigningModal(worker);
+                });
+                break;
+            case "securite":
+                unassigned.forEach(worker => {
+                    if (worker.role == "securite" || worker.role == "manager" || worker.role == "cleaning")
+                        assigningModal(worker);
+                });
+                break;
+            case "reception":
+                unassigned.forEach(worker => {
+                    if (worker.role == "receptionist" || worker.role == "manager" || worker.role == "cleaning")
+                        assigningModal(worker);
+                });
+                break;
+            case "staff-room":
+                unassigned.forEach(worker => assigningModal(worker));
+                break;
+            case "archives":
+                unassigned.forEach(worker => {
+                    if (worker.role == "it" || worker.role == "manager")
+                        assigningModal(worker);
+                });
+                break;
+        }
+        if (document.querySelector("#adding--modal").firstElementChild.children.length == 0)
+            document.getElementById("adding--modal").style.display = "none"
+    }
+}
+
+// displays worker on the adding modal
 function assigningModal(worker) {
     document.querySelector("#adding--modal").firstElementChild.insertAdjacentHTML("beforeend", `
     <div class="modalCard">
@@ -286,6 +285,7 @@ function assigningModal(worker) {
          </div>`);
 }
 
+// from unassigned to assinged 
 function assignToZone(ele, id) {
     if (targetedZone.children.length < 5) {
         indexToRemove = unassigned.indexOf(unassigned.find(worker => worker.id == id));
@@ -297,14 +297,16 @@ function assignToZone(ele, id) {
         targetedZone.insertAdjacentHTML('beforeend', `<div><img src="${assigned[assigned.length - 1].imageUrl}" alt="worker image" onclick="showDetails(${assigned[assigned.length - 1].id})"><h3>${assigned[assigned.length - 1].name}</h3><button class="remove-from-zone" onclick="unassignFromZone(this)">x</button><span style="display: none">${assigned[assigned.length - 1].id}</span></div>`);
         zoneEmpty();
     }
+    else
+        alert("Room is full!");
 }
 
+// remove worker from a zone 
 function unassignFromZone(ele) {
     unassigned.push(assigned.splice(assigned.indexOf(assigned.find(worker => worker.id == ele.nextElementSibling.innerHTML)), 1)[0])
     ele.parentElement.outerHTML = "";
-    console.log("after unassing: ", unassigned);
     displayWorker(unassigned[unassigned.length - 1]);
-    // assigningModal(unassigned[unassigned.length - 1]);
-    document.getElementById("adding--modal").style.display = "none";
+    if (document.getElementById("adding--modal").style.display == "flex") 
+        permissionToZone();
     zoneEmpty();
 }
