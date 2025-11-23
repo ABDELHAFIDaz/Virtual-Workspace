@@ -1,25 +1,27 @@
 let unassigned = [];
-let conferenceRoom = [];
-let securite = [];
-let reception = [];
-let archives = [];
-let servers = [];
-let staffRomm = [];
+let assigned = [];
 
 let experiencesCounter = 0;
 let ID = 1;
 
+let targetedZone;
 // demos
 for (let i = 0; i < 5; i++) {
-    addWorker(`name${i + 1}`, (i > 2) ? "it" : "manager", "https://picsum.photos/id/870/200/300?grayscale&blur=2.jpg", "test@gmail.com", "0123456789");
+    addWorker(`name${i + 1}`, (i > 2) ? "it" : "manager", "img/xIcon.webp", "test@gmail.com", "0123456789");
     displayWorker(unassigned[unassigned.length - 1]);
 }
+
+// for displaying and hidding the side bar
+document.querySelector(".side-bar-toggle").addEventListener('click', () => {
+    document.querySelector("aside").classList.toggle("hidden");
+})
 
 // add a new worker button
 document.getElementById('add-worker-btn').addEventListener('click', () => {
     document.getElementById("form").classList.toggle("is-hidden");
     document.querySelector(".error").classList.add("is-hidden");
     document.querySelectorAll('input').forEach(ele => ele.style.borderColor = "black");
+    document.querySelector(".experiences").insertAdjacentHTML('afterend', `<button id="add-experience" type="button">Add an experience</button>`);
 
     // add experience button
     document.getElementById("add-experience").addEventListener('click', (e) => {
@@ -33,7 +35,8 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
                 <input type="date">
                 <label for="">To:</label>
                 <input type="date">
-            </div>`)
+                <button type="button" class="remove-experience" onclick="removeExperience(this)">X</button>
+            </div>`);
     })
 
     // form submit hundler
@@ -101,10 +104,14 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
                 exper.children[3].style.borderColor = "black";
 
             // to check if the dates are valid
-            if (exper.children[5].value >= exper.children[7].value) {
+            if (!(exper.children[5].value < exper.children[7].value)) {
                 isValid = false;
                 exper.children[5].style.borderColor = "red";
                 exper.children[7].style.borderColor = "red";
+            }
+            else{
+                exper.children[5].style.borderColor = "black";
+                exper.children[7].style.borderColor = "black";
             }
         })
 
@@ -116,6 +123,7 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
             document.getElementById("form").reset();
             experiencesCounter = 0;
             document.querySelector(".experiences").innerHTML = "";
+            document.getElementById("add-experience").outerHTML = "";
         }
         else {
             document.querySelector(".error").classList.remove("is-hidden");
@@ -123,6 +131,12 @@ document.getElementById('add-worker-btn').addEventListener('click', () => {
         console.log("unassigned array: ", unassigned);
     })
 })
+
+// for removing experiences
+function removeExperience(element) {
+    element.parentElement.outerHTML = "";
+    experiencesCounter--;
+}
 
 // pushing each new worker in to the unnassigned array
 function addWorker(name, role, imageUrl, email, phoneNum) {
@@ -158,14 +172,19 @@ function displayWorker(worker) {
          </div>`);
 }
 
+// for closing the form
 document.getElementById('form-closer').addEventListener('click', () => {
     document.getElementById("form").classList.add("is-hidden");
     document.getElementById("form").reset();
+    document.querySelector(".experiences").innerHTML = "";
+    document.getElementById("add-experience").outerHTML = "";
+    experiencesCounter = 0;
 })
 
 // for the details modal
 function showDetails(id) {
-    let target = unassigned.find(user => user.id == id);
+    let target = unassigned.find(worker => worker.id == id) ? unassigned.find(user => user.id == id) : assigned.find(wrkr => wrkr.id == id);
+    // console.log("targettttttt: ", target);
     document.getElementById("detail--modal").style.display = "flex";
     document.getElementById("detail--modal").innerHTML = `<img src="${target.imageUrl}" alt="worker-image">
             <h2>${target.name}</h2>
@@ -181,18 +200,20 @@ function closeModal() { document.getElementById("detail--modal").style.display =
 
 // to check if the important zone are empty
 function zoneEmpty() {
-    if (securite.length == 0)
+    if (document.getElementById("securite").firstElementChild.children.length == 0)
         document.getElementById("securite").style.backgroundColor = "rgba(255, 0, 0, 0.404)";
     else
         document.getElementById("securite").style.backgroundColor = "rgba(0, 255, 255, 0.204)";
-    if (reception.length == 0)
+
+    if (document.getElementById("reception").firstElementChild.children.length == 0)
         document.getElementById("reception").style.backgroundColor = "rgba(255, 0, 0, 0.404)";
     else
-        document.getElementById("securite").style.backgroundColor = "rgba(0, 255, 255, 0.204)";
-    if (servers.length == 0)
+        document.getElementById("reception").style.backgroundColor = "rgba(0, 255, 255, 0.204)";
+
+    if (document.getElementById("servers").firstElementChild.children.length == 0)
         document.getElementById("servers").style.backgroundColor = "rgba(255, 0, 0, 0.404)";
     else
-        document.getElementById("securite").style.backgroundColor = "rgba(0, 255, 255, 0.204)";
+        document.getElementById("servers").style.backgroundColor = "rgba(0, 255, 255, 0.204)";
 }
 zoneEmpty();
 
@@ -200,9 +221,10 @@ zoneEmpty();
 document.querySelectorAll(".add-to-room-btn").forEach(btn => {
     btn.addEventListener('click', () => {
         document.getElementById("adding--modal").firstElementChild.innerHTML = "";
+        targetedZone = btn.parentElement.firstElementChild;
         if (unassigned.length != 0) {
             let zone = btn.previousElementSibling.innerHTML;
-            console.log("zone: ", zone)
+            // console.log("zone: ", zone)
             document.getElementById("adding--modal").style.display = "flex"
             switch (zone) {
                 case "conference-room":
@@ -236,6 +258,8 @@ document.querySelectorAll(".add-to-room-btn").forEach(btn => {
                     });
                     break;
             }
+            if(document.querySelector("#adding--modal").firstElementChild.children.length == 0)
+                document.getElementById("adding--modal").style.display = "none"
         }
 
     })
@@ -246,7 +270,7 @@ document.querySelectorAll(".add-to-room-btn").forEach(btn => {
 
 function assigningModal(worker) {
     document.querySelector("#adding--modal").firstElementChild.insertAdjacentHTML("beforeend", `
-    <div class="card">
+    <div class="modalCard">
             <div class="image-div"><img src="${worker.imageUrl}" alt="worker image"></div>
             <div>
                 <h4>${worker.name}</h4>
@@ -257,12 +281,23 @@ function assigningModal(worker) {
 }
 
 function assignToZone(ele, id) {
-    indexToRemove = unassigned.indexOf(unassigned.find(worker => worker.id == id));
-    unassigned.splice(indexToRemove, 1);
-    document.querySelector(".users-cards").children[indexToRemove].outerHTML = "";
-    // document.querySelector(".users-cards").innerHTML = "";
-    // unassigned.forEach(worker => displayWorker(worker));
+    if (targetedZone.children.length < 5) {
+        indexToRemove = unassigned.indexOf(unassigned.find(worker => worker.id == id));
+        assigned.push(unassigned.splice(indexToRemove, 1)[0]);
+        document.querySelector(".users-cards").children[indexToRemove].outerHTML = "";
+        ele.parentElement.outerHTML = "";
+        if (document.getElementById("adding--modal").firstElementChild.children.length == 0)
+            document.getElementById("adding--modal").style.display = "none";
+        targetedZone.insertAdjacentHTML('beforeend', `<div><img src="${assigned[assigned.length - 1].imageUrl}" alt="worker image" onclick="showDetails(${assigned[assigned.length - 1].id})"><h3>${assigned[assigned.length - 1].name}</h3><button class="remove-from-zone" onclick="unassignFromZone(this)"></button><span style="display: none">${assigned[assigned.length - 1].id}</span></div>`);
+        zoneEmpty();
+    }
+}
+
+function unassignFromZone(ele) {
+    unassigned.push(assigned.splice(assigned.indexOf(assigned.find(worker => worker.id == ele.nextElementSibling.innerHTML)), 1)[0])
     ele.parentElement.outerHTML = "";
-    if (document.getElementById("adding--modal").firstElementChild.children.length == 0)
-        document.getElementById("adding--modal").style.display = "none";
+    console.log("after unassing: ", unassigned);
+    displayWorker(unassigned[unassigned.length - 1]);
+    assigningModal(unassigned[unassigned.length - 1]);
+    zoneEmpty();
 }

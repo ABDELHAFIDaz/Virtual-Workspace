@@ -14,35 +14,41 @@
         <!-- <img src="img/plan-69159a65c5684763515973.jpg" alt=""> -->
         <section class="company-rooms">
             <div class="rooms" id="conference-room">
+                <div class="company-zones" id="meet-zone"></div>
                 <span style="display: none;">conference-room</span>
                 <button class="add-to-room-btn" id="to-conference">+</button>
             </div>
             <div class="rooms" id="servers">
-                <div style="display: none;">servers</div>
+                <div class="company-zones" id="servers-zone"></div>
+                <span style="display: none;">servers</span>
                 <button class="add-to-room-btn" id="to-servers">+</button>
             </div>
-            <div class="rooms" id="jus-gap"></div>
-            <div class="rooms" id="ali-gap"></div>
+            <div id="jus-gap"></div>
+            <div id="ali-gap"></div>
             <div class="rooms" id="securite">
+                <div class="company-zones" id="securite-zone"></div>
                 <span style="display: none;">securite</span>
                 <button class="add-to-room-btn" id="to-securite">+</button>
             </div>
             <div class="rooms" id="reception">
+                <div class="company-zones" id="reception-zone"></div>
                 <span style="display: none;">reception</span>
                 <button class="add-to-room-btn" id="to-reception">+</button>
             </div>
             <div class="rooms" id="staff-room">
+                <div class="company-zones" id="staff-zone"></div>
                 <span style="display: none;">staff-room</span>
                 <button class="add-to-room-btn" id="to-staff-room">+</button>
             </div>
             <div class="rooms" id="archives">
+                <div class="company-zones" id="archives-zone"></div>
                 <span style="display: none;">archives</span>
                 <button class="add-to-room-btn" id="to-archives">+</button>
             </div>
         </section>
     </main>
+    <button class="side-bar-toggle" style="font-size: 20px;">=</button>
     <aside>
-        <button class="side-bar-toggle" style="font-size: 20px;">side bar</button>
         <h1>Unassigned Staff</h1>
 
         <div class="users-cards">
@@ -91,7 +97,6 @@
                 <input type="date">
             </div> -->
         </div>
-        <button id="add-experience" type="button">Add an experience</button>
 
         <label for="form-email">email:</label>
         <input type="email" placeholder="example@gmail.com" id="form-email">
@@ -108,7 +113,7 @@
         <p>Email: ${}</p>
         <p>Phone number: ${}</p> -->
      </div>
-     <!-- =============== assign modal -->
+     <!-- =============== assign modal =============-->
      <div class="details-modal is-hidden" id="adding--modal" style="z-index: 999;">
         <div class="users-cards"></div>
         <button class="close-modal-btn" id="close-adding-modal">Close</button>

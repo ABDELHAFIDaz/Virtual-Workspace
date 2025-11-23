@@ -1,10 +1,10 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     display: flex;
     flex-direction: row-reverse;
     gap: 20px;
@@ -13,7 +13,7 @@ body{
     z-index: 999;
 }
 
-main{
+main {
     position: relative;
     margin-top: 3vh;
     margin-right: 3vh;
@@ -22,20 +22,20 @@ main{
     background-image: url(img/plan-69159a65c5684763515973.jpg);
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
-.company-rooms{
+.company-rooms {
     width: 100%;
     height: 100%;
     /* background-color: aqua; */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    grid-template-areas: 
-    'conference-room conference-room ali-gap servers securite'
-    'reception reception ali-gap jus-gap jus-gap'
-    'reception reception ali-gap staff-room archives';
+    grid-template-areas:
+        'conference-room conference-room ali-gap servers securite'
+        'reception reception ali-gap jus-gap jus-gap'
+        'reception reception ali-gap staff-room archives';
     /* gap: 4px; */
     justify-items: center;
     /* align-items: center; */
@@ -43,73 +43,86 @@ main{
     /* top: 0px; */
 }
 
-#reception{
+#reception {
     grid-area: reception;
     width: 80%;
     height: 90%;
-    margin-top: 30px;
+    margin-top: 20px;
     background-color: rgba(0, 255, 255, 0.204);
 }
-#servers{
+
+#servers {
     grid-area: servers;
     width: 90%;
     height: 90%;
-    margin-right: 70px;
+    margin-top: 20px;
+    margin-right: 95px;
     background-color: rgba(0, 255, 255, 0.204);
 }
-#securite{
+
+#securite {
     grid-area: securite;
     width: 90%;
     height: 90%;
+    margin-top: 20px;
     margin-right: 20px;
     background-color: rgba(0, 255, 255, 0.204);
 }
-#conference-room{
+
+#conference-room {
     grid-area: conference-room;
-    width: 80%;
+    width: 90%;
     height: 90%;
+    margin-top: 15px;
+    margin-right: 15px;
     background-color: rgba(0, 255, 255, 0.204);
 }
-#archives{
+
+#archives {
     grid-area: archives;
     width: 90%;
     height: 90%;
     background-color: rgba(0, 255, 255, 0.204);
-    margin-top: 20px;
+    margin-top: 10px;
     margin-right: 20px;
 }
-#staff-room{
+
+#staff-room {
     grid-area: staff-room;
     width: 80%;
     height: 90%;
-    margin-right: 50px;
-    margin-top: 20px;
+    margin-right: 70px;
+    margin-top: 10px;
     background-color: rgba(0, 255, 255, 0.204);
 }
-#jus-gap{
+
+#jus-gap {
     grid-area: jus-gap;
     width: 80%;
     height: 90%;
     /* background-color: rgba(0, 255, 255, 0.204); */
 }
-#ali-gap{
+
+#ali-gap {
     grid-area: ali-gap;
     width: 80%;
     height: 90%;
     /* background-color: rgba(0, 255, 255, 0.204); */
 }
 
-.company-rooms>div{
+/* .company-rooms>div{
+    background-color: violet;
+    width: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
-main>img{
+main>img {
     width: 100%;
 }
 
-aside{
+aside {
     background-color: white;
     width: 15%;
     flex-grow: 1;
@@ -122,20 +135,32 @@ aside{
     border-radius: 10px;
 }
 
-.side-bar-toggle{
+.side-bar-toggle {
     display: none;
     position: absolute;
     top: 0px;
-    left: 0px;
+    left: 10px;
+    border: none;
+    border-radius: 5px;
+    padding: 0px 5px;
+    background-color: transparent;
 }
 
-aside>h1{
+.side-bar-toggle:hover {
+    background-color: white;
+}
+
+.hidden {
+    display: flex;
+}
+
+aside>h1 {
     align-self: flex-start;
     color: rgb(37, 91, 167);
     font-size: 25px;
 }
 
-.users-cards{
+.users-cards {
     height: 90%;
     width: 90%;
     display: flex;
@@ -154,16 +179,29 @@ aside>h1{
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 10%;
+    gap: 20%;
     padding: 6px;
 }
 
-.card:hover{
+.modalCard{
+    border-radius: 10px;
+    border: none;
+    background-color: rgb(183, 180, 180);
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20%;
+    padding: 6px;
+}
+
+.card:hover, .modalCard:hover {
     border-color: gray;
     box-shadow: 0px 0px 6px skyblue;
 }
 
-#add-worker-btn{
+#add-worker-btn {
     border-radius: 10px;
     padding: 5px;
     width: 80%;
@@ -173,15 +211,15 @@ aside>h1{
     font-size: 15px;
 }
 
-#add-worker-btn:hover{
+#add-worker-btn:hover {
     border: 5px rgb(37, 91, 167) solid;
 }
 
-.is-hidden{
+.is-hidden {
     display: none;
 }
 
-form{
+form {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -201,12 +239,13 @@ form{
     overflow-y: auto;
 }
 
-.details-modal{
+.details-modal {
     position: absolute;
     top: 50%;
     left: 28%;
     transform: translate(-50%, -80%);
-    display: none;  /* to be hidden by default*/
+    display: none;
+    /* to be hidden by default*/
     flex-direction: column;
     align-items: center;
     background-color: lightgrey;
@@ -220,12 +259,13 @@ form{
     z-index: 1000;
 }
 
-#adding--modal{
+#adding--modal {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -80%);
-    display: none;  /* to be hidden by default*/
+    display: none;
+    /* to be hidden by default*/
     flex-direction: column;
     align-items: center;
     background-color: lightgrey;
@@ -239,14 +279,14 @@ form{
     z-index: 1000;
 }
 
-.details-modal>img{
+.details-modal>img {
     border-radius: 100%;
     width: 80px;
     height: 80px;
     border: 1px black solid;
 }
 
-form>div{
+form>div {
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -254,17 +294,18 @@ form>div{
     padding-right: 10px;
 }
 
-form>div>h2{
+form>div>h2 {
     color: rgb(37, 91, 167);
 }
 
-input, select{
+input,
+select {
     padding: 10px;
     width: 80%;
     border-radius: 7px;
 }
 
-.error{
+.error {
     color: red;
     padding: 10px;
     width: 70%;
@@ -274,14 +315,15 @@ input, select{
     box-shadow: 0px 0px 6px red;
 }
 
-.image-div>img{
+.image-div>img {
     border-radius: 100%;
     width: 30px;
     height: 30px;
     border: 1px black solid;
 }
 
-#sub-btn, .details-modal>button{
+#sub-btn,
+.details-modal>button {
     border-radius: 10px;
     width: 50%;
     padding: 10px;
@@ -289,7 +331,7 @@ input, select{
     color: white;
 }
 
-#add-experience{
+#add-experience {
     border-radius: 10px;
     width: 30%;
     padding: 10px;
@@ -298,22 +340,22 @@ input, select{
     font-size: 12px;
 }
 
-#add-experience:hover{
+#add-experience:hover {
     border: 2px rgb(242, 245, 62) solid;
     background-color: rgb(242, 245, 62);
 }
 
-#form-closer{
+#form-closer {
     background-color: white;
     border: none;
     font-size: larger;
 }
 
-#form-closer:hover{
+#form-closer:hover {
     color: rgb(37, 91, 167);
 }
 
-.experiences{
+.experiences {
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -321,7 +363,8 @@ input, select{
     gap: 20px;
 }
 
-.experiences>div{
+.experiences>div {
+    position: relative;
     width: 100%;
     padding: 10px;
     display: flex;
@@ -332,23 +375,37 @@ input, select{
     gap: 10px;
 }
 
-label{
+.remove-experience{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    padding: 0px 5px;
+    background-color: red;
+    color: white;
+    border-radius: 7px;
+}
+
+label {
     align-self: flex-start;
 }
-/* 
-.rooms{
-    width: 50px;
-    height: 50px;
-} */
 
-.add-to-room-btn{
+.rooms {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.add-to-room-btn {
     padding: 3px;
     background-color: rgb(37, 91, 167);
     border-radius: 4px;
     color: white;
 }
 
-.add-to-zone{
+.add-to-zone {
     border-radius: 7px;
     background-color: skyblue;
     color: white;
@@ -356,20 +413,127 @@ label{
     justify-self: flex-end;
 }
 
-@media(max-width: 1024px){
-    main, .company-rooms {
+.company-zones {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.company-zones>div {
+    position: relative;
+    padding: 5px;
+    width: 40px;
+    height: fit-content;
+    border-radius: 7px;
+    background-color: white;
+    text-align: center;
+}
+
+.company-zones>div>img {
+    border-radius: 100%;
+    border: 1px black solid;
+    width: 90%;
+    height: 5%;
+}
+
+.company-zones>div>h3 {
+    font-size: 10px;
+}
+
+.remove-from-zone{
+    position: absolute;
+    right: 0px;
+    top: -5px;
+    width: 25%;
+    height: 25%;
+    /* padding: 0px 5px; */
+    background-color: red;
+    /* color: white; */
+    border-radius: 100%;
+
+}
+
+@media(max-width: 1024px) {
+
+    main,
+    .company-rooms {
         width: 100%;
     }
-    aside{
+
+    aside {
         display: none;
+        width: 25%;
+        position: absolute;
+        left: 0px;
+        height: 90vh;
     }
-    .side-bar-toggle{
+
+    .side-bar-toggle {
         display: block;
+        z-index: 1000;
     }
-    #staff-room, #archives{
+
+    #staff-room,
+    #archives {
         height: 80%;
     }
-    #reception{
+
+    #reception {
         margin-bottom: 10px;
+    }
+
+    /* .company-rooms>div{
+        flex-direction: column;
+    } */
+    /* .company-zones {
+        flex-direction: column;
+        align-items: center;
+    } */
+
+    .company-zones>div {
+        width: 35px;
+        height: 50px;
+    }
+
+    .company-zones>div>img {
+        width: 20px;
+        height: 20px;
+    }
+
+    #adding--modal {
+        width: 30%;
+    }
+    .details-modal {
+        width: 30%;
+        left: 50%;
+    }
+    form{
+        width: 45%;
+    }
+}
+
+@media(max-width: 767px){
+    aside{
+        width: 35%;
+    }
+    #servers{
+        margin-right: 50px;
+    }
+
+    #staff-room{
+        margin-right: 50px;
+    }
+    #adding--modal {
+        width: 50%;
+    }
+    .details-modal {
+        width: 45%;
+        left: 60%;
+    }
+    form{
+        width: 60%;
     }
 }
